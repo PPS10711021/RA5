@@ -45,12 +45,7 @@ Esta práctica permite alcanzar los siguientes criterios de evaluación:
 
 ## 🛠️ Actividades
 
-### ✅ 3.1. Requisitos previos  
-🔗 Crear cuenta en **GitHub** para entregar el repositorio con el código y pipelines.  
-📦 Crear cuenta en **Docker Hub** para almacenar imágenes, si se requiere.  
-
-### 🔧 3.2. Pipeline básico con Jenkins  
-📄 Crear un pipeline utilizando un `Jenkinsfile` que compile y despliegue una aplicación de prueba.
+### 🔧 3.1. Realizar las tareas 1 y 2 del apartado de Jenkins  
 
 [Calculadora](https://github.com/PPS10711021/RA5/blob/main/RA5_1/calculadora.py)
 ```python
@@ -97,10 +92,48 @@ class TestCalculadora(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 ```
+ 
+📄 Crear un pipeline utilizando un `Jenkinsfile` que compile y despliegue una aplicación de prueba.
+
+[Jenkinsfile](https://github.com/PPS10711021/RA5/blob/main/RA5_1/Jenkinsfile)
+```python
+### Jenkinsfile
+
+pipeline {
+    agent any
+
+    triggers {
+        pollSCM('* * * * *') // Revisa cambios cada minuto (para pruebas)
+    }
+
+    stages {
+        stage('Preparar entorno') {
+            steps {
+                echo 'Entorno listo para pruebas.'
+            }
+        }
+
+        stage('Pruebas Unitarias') {
+            steps {
+                sh 'python3 -m unittest test_calculadora.py'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline ejecutado correctamente.'
+        }
+        failure {
+            echo 'La pipeline ha fallado. Revisar errores.'
+        }
+    }
+}
+```
 
 📖 Referencia: [Tareas Jenkins](https://psegarrac.github.io/Ciberseguridad-PePS/tema5/cd/ci/2022/01/13/jenkins.html#tareas)
 
-### 🐳 3.3. Jenkins + Docker  
+### 🐳 3.2. Jenkins + Docker  
 📌 Crear un `jenkinsfile.docker` que incluya los siguientes stages:
 
 1️⃣ **Build Docker:** Construcción de imagen desde Dockerfile  
