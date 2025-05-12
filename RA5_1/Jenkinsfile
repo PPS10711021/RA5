@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     triggers {
-        pollSCM('* * * * *') // Revisa cambios cada minuto (para pruebas)
+        pollSCM('* * * * *')
     }
 
     stages {
@@ -14,7 +14,7 @@ pipeline {
 
         stage('Pruebas Unitarias') {
             steps {
-                sh 'python3 -m unittest RA5_1/test_calculadora.py'
+                sh 'PYTHONPATH=RA5_1 python3 -m unittest RA5_1/test_calculadora.py'
             }
         }
     }
