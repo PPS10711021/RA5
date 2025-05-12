@@ -97,13 +97,11 @@ if __name__ == "__main__":
 
 [Jenkinsfile](https://github.com/PPS10711021/RA5/blob/main/RA5_1/Jenkinsfile)
 ```python
-### Jenkinsfile
-
 pipeline {
     agent any
 
     triggers {
-        pollSCM('* * * * *') // Revisa cambios cada minuto (para pruebas)
+        pollSCM('* * * * *')
     }
 
     stages {
@@ -115,7 +113,7 @@ pipeline {
 
         stage('Pruebas Unitarias') {
             steps {
-                sh 'python3 -m unittest test_calculadora.py'
+                sh 'PYTHONPATH=RA5_1 python3 -m unittest RA5_1/test_calculadora.py'
             }
         }
     }
