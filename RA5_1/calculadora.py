@@ -2,7 +2,7 @@ import sys
 
 class Calculadora:
     def multiplicar(self, a, b):
-        return 0 / b
+        return a * b
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
