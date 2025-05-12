@@ -1,85 +1,91 @@
-# 🚀 Automatización y Despliegue Seguro con Jenkins – CI/CD Practices
+# 🚀 Jenkins CI/CD - Seguridad en Despliegue Automatizado
 
 ## 📌 Introducción
 
-### 🔄 1.1. CI/CD – Integración y Despliegue Continuo
-La automatización en el desarrollo de software moderno es fundamental para entregar código de calidad de manera rápida y segura. El modelo **CI/CD (Continuous Integration / Continuous Deployment)** se basa en prácticas que permiten:
+### 🔄 1.1. Automatización CI/CD  
+La integración y el despliegue continuo (CI/CD) representan un pilar clave en la entrega ágil y segura de software. Automatizar estos procesos permite reducir errores humanos, mejorar la calidad del código y acelerar la entrega de nuevas funcionalidades. Los objetivos principales de CI/CD son:
 
-✅ Integrar cambios de código constantemente en un repositorio compartido  
-✅ Automatizar la construcción, pruebas y despliegue del software  
-✅ Reducir errores humanos mediante pipelines reproducibles  
-✅ Detectar fallos a tiempo y facilitar despliegues controlados en producción
+✅ Compilación y pruebas automatizadas  
+✅ Integración continua de cambios  
+✅ Despliegue rápido, trazable y seguro  
+✅ Reversión rápida ante errores
 
-### ⚙️ 1.2. Jenkins – Automatización en Acción
-**Jenkins** es una herramienta open-source escrita en Java que permite implementar procesos CI/CD de forma flexible y extensible. Mediante su arquitectura basada en plugins, Jenkins permite:
+### 🛠️ 1.2. Jenkins como motor de automatización  
+**Jenkins** es una herramienta open-source utilizada para automatizar tareas relacionadas con el desarrollo, prueba y despliegue de aplicaciones. Es altamente personalizable y extensible mediante plugins.
 
-- 🔹 Integrarse con sistemas de control de versiones (Git)  
-- 🔹 Ejecutar pruebas automáticas, builds y despliegues  
-- 🔹 Definir flujos con archivos `Jenkinsfile` (pipeline como código)  
-- 🔹 Trabajar en entornos virtualizados o contenerizados (Docker)  
-- 🔹 Monitorizar tareas desde una interfaz web intuitiva
+🔹 Soporte para integración con Git, Docker, Maven, Kubernetes  
+🔹 Definición de pipelines mediante Jenkinsfile  
+🔹 Monitoreo a través de interfaz web  
+🔹 Ejecución en servidores físicos, virtuales o contenedores  
+🔹 Pipeline as Code: versión controlada de los procesos
 
-### 📄 1.3. Jenkinsfile y Docker
-Gracias al uso de Jenkinsfile, los procesos de integración y despliegue quedan versionados y automatizados. Además, con el uso de Docker y Docker Compose, es posible:
+### 📄 1.3. Jenkinsfile y Docker  
+Un `Jenkinsfile` permite describir de forma programática el flujo de trabajo de una pipeline. Al integrarlo con Docker, se puede construir y ejecutar software en entornos controlados, seguros y repetibles.
 
-✅ Crear entornos consistentes para pruebas  
-✅ Generar imágenes y contenedores desde Jenkins  
-✅ Automatizar el ciclo completo de desarrollo ➝ test ➝ despliegue
+🔹 Construcción de imágenes Docker  
+🔹 Ejecución de tests dentro de contenedores  
+🔹 Despliegue de aplicaciones desde la pipeline  
+🔹 Uso de `docker-compose` para servicios multi-contenedor
 
 ---
 
 ## 🎯 Objetivos
 
-Esta práctica permite alcanzar los siguientes criterios del módulo de *Ciberseguridad en entornos de las tecnologías de la información*:
+Esta práctica permite alcanzar los siguientes criterios de evaluación:
 
-### 📌 RA5: Implanta sistemas seguros de despliegue de software, utilizando herramientas para la automatización de la construcción de sus elementos.
+📌 **RA5:** Implanta sistemas seguros de despliegue de software utilizando herramientas de automatización.
 
-- ✔ **CA.A:** Configuración y uso de Jenkins para CI/CD  
-- ✔ **CA.B:** Automatización de pruebas y despliegues  
-- ✔ **CA.C:** Integración segura con entornos Docker  
-- ✔ **CA.D:** Definición de pipelines como código (Jenkinsfile)  
-- ✔ **CA.E:** Generación y ejecución de imágenes y contenedores  
-- ✔ **CA.F:** Control de versiones y documentación en GitHub
+✔ **CA.A:** Uso de Jenkins para automatización de pipelines  
+✔ **CA.B:** Integración de Jenkins con Docker  
+✔ **CA.C:** Ejecución segura de pruebas y despliegues  
+✔ **CA.D:** Uso de control de versiones (GitHub)  
+✔ **CA.E:** Documentación del proceso y evidencias
 
 ---
 
 ## 🛠️ Actividades
 
-### ✅ 3.1. Primeros pasos con Jenkins
-- 🔧 Realizar las tareas 1 y 2 del apartado de Jenkins disponibles en:  
-  [Guía de Jenkins – Tareas](https://psegarrac.github.io/Ciberseguridad-PePS/tema5/cd/ci/2022/01/13/jenkins.html#tareas)  
-- 📄 Crear y ejecutar una pipeline básica mediante `Jenkinsfile`
+### ✅ 3.1. Requisitos previos  
+🔗 Crear cuenta en **GitHub** para entregar el repositorio con el código y pipelines.  
+📦 Crear cuenta en **Docker Hub** para almacenar imágenes, si se requiere.  
 
-### ✅ 3.2. Jenkins + Docker: Automatización avanzada
-- 🔄 Crear un `jenkinsfile.docker` que incluya:
+### 🔧 3.2. Pipeline básico con Jenkins  
+📄 Crear un pipeline utilizando un `Jenkinsfile` que compile y despliegue una aplicación de prueba.
 
-  1️⃣ **Stage:** Construcción de la imagen Docker  
-  2️⃣ **Stage:** Ejecución de contenedor desde la imagen  
-  3️⃣ **Stage:** Ejecución de tests dentro del contenedor  
-  4️⃣ **Stage:** Despliegue automatizado  
-  5️⃣ **Stage:** Docker Compose con múltiples servicios
+📖 Referencia: [Tareas Jenkins](https://psegarrac.github.io/Ciberseguridad-PePS/tema5/cd/ci/2022/01/13/jenkins.html#tareas)
 
-📁 Todo el proyecto debe estar correctamente organizado en GitHub, incluyendo un **README** con capturas de las pipelines y una breve explicación de su funcionamiento.
+### 🐳 3.3. Jenkins + Docker  
+📌 Crear un `jenkinsfile.docker` que incluya los siguientes stages:
+
+1️⃣ **Build Docker:** Construcción de imagen desde Dockerfile  
+2️⃣ **Run Container:** Ejecución del contenedor  
+3️⃣ **Run Tests:** Ejecución de pruebas dentro del contenedor  
+4️⃣ **Deploy:** Simulación o ejecución real de despliegue  
+5️⃣ **Docker Compose:** Lanzamiento de servicios mediante `docker-compose`
 
 ---
 
 ## 📦 Requisitos de entrega
 
-📂 Entrega mediante repositorio GitHub:  
-- ✔️ `Jenkinsfile` y `jenkinsfile.docker`  
-- ✔️ `docker-compose.yml`  
-- ✔️ README con capturas y descripción  
+📂 Entrega mediante repositorio GitHub con:
 
-✍️ Informe detallado con:  
-- 🔍 Explicación de cada etapa del pipeline  
-- 📸 Evidencias visuales  
+✔️ `Jenkinsfile`  
+✔️ `jenkinsfile.docker`  
+✔️ `docker-compose.yml`  
+✔️ `Dockerfile` (si aplica)  
+✔️ Capturas de pantalla del funcionamiento de las pipelines  
+✔️ README explicando cada etapa del proceso
+
+✍️ Informe detallado que incluya:
+
+- 📸 Evidencias visuales de las ejecuciones  
+- 🔍 Descripción técnica de cada fase de la pipeline  
 - 🔐 Medidas de seguridad implementadas
 
 ---
 
 ## 📖 Referencias
 
-- 🌐 [Jenkins Official Site](https://www.jenkins.io)  
-- 📘 [Using Docker with Jenkins Pipelines](https://www.jenkins.io/doc/book/pipeline/docker/)  
-- 💻 [Repositorio Jenkins – Ejemplos](https://github.com/jenkinsci/pipeline-examples)
-
+- 🌐 [Jenkins Official](https://www.jenkins.io)  
+- 📘 [Docker en Jenkins Pipelines](https://www.jenkins.io/doc/book/pipeline/docker/)  
+- 💻 [Ejemplos de Jenkinsfile](https://github.com/jenkinsci/pipeline-examples)
