@@ -51,6 +51,8 @@ Esta práctica permite alcanzar los siguientes criterios de evaluación:
 
 ### 🔧 3.2. Pipeline básico con Jenkins  
 📄 Crear un pipeline utilizando un `Jenkinsfile` que compile y despliegue una aplicación de prueba.
+[Calculadora](https://github.com/PPS10711021/RA5/blob/main/RA5_1/calculadora.py)
+[TestCalculadora](https://github.com/PPS10711021/RA5/blob/main/RA5_1/test_calculadora.py)
 
 📖 Referencia: [Tareas Jenkins](https://psegarrac.github.io/Ciberseguridad-PePS/tema5/cd/ci/2022/01/13/jenkins.html#tareas)
 
