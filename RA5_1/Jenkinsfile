@@ -1,0 +1,32 @@
+### Jenkinsfile
+
+pipeline {
+    agent any
+
+    triggers {
+        pollSCM('* * * * *') // Revisa cambios cada minuto (para pruebas)
+    }
+
+    stages {
+        stage('Preparar entorno') {
+            steps {
+                echo 'Entorno listo para pruebas.'
+            }
+        }
+
+        stage('Pruebas Unitarias') {
+            steps {
+                sh 'python3 -m unittest test_calculadora.py'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline ejecutado correctamente.'
+        }
+        failure {
+            echo 'La pipeline ha fallado. Revisar errores.'
+        }
+    }
+}
