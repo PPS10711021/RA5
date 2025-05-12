@@ -51,8 +51,52 @@ Esta práctica permite alcanzar los siguientes criterios de evaluación:
 
 ### 🔧 3.2. Pipeline básico con Jenkins  
 📄 Crear un pipeline utilizando un `Jenkinsfile` que compile y despliegue una aplicación de prueba.
+
 [Calculadora](https://github.com/PPS10711021/RA5/blob/main/RA5_1/calculadora.py)
+```python
+import sys
+
+class Calculadora:
+    def multiplicar(self, a, b):
+        return a * b
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Uso: python calculadora.py <num1> <num2>")
+        sys.exit(1)
+
+    try:
+        num1 = float(sys.argv[1])
+        num2 = float(sys.argv[2])
+        calc = Calculadora()
+        resultado = calc.multiplicar(num1, num2)
+        print(f"Resultado: {resultado}")
+    except ValueError:
+        print("Por favor ingresa dos números válidos.")
+        sys.exit(1)
+```
+
 [TestCalculadora](https://github.com/PPS10711021/RA5/blob/main/RA5_1/test_calculadora.py)
+```python
+import unittest
+from calculadora import Calculadora
+
+class TestCalculadora(unittest.TestCase):
+    def setUp(self):
+        self.calc = Calculadora()
+
+    def test_multiplicacion_positiva(self):
+        self.assertEqual(self.calc.multiplicar(3, 4), 12)
+
+    def test_multiplicacion_cero(self):
+        self.assertEqual(self.calc.multiplicar(0, 100), 0)
+
+    def test_multiplicacion_negativa(self):
+        self.assertEqual(self.calc.multiplicar(-2, 5), -10)
+
+if __name__ == "__main__":
+    unittest.main()
+```
 
 📖 Referencia: [Tareas Jenkins](https://psegarrac.github.io/Ciberseguridad-PePS/tema5/cd/ci/2022/01/13/jenkins.html#tareas)
 
