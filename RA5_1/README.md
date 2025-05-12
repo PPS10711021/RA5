@@ -71,7 +71,7 @@ if __name__ == "__main__":
         sys.exit(1)
 ```
 
-![TestCalculadora](https://github.com/PPS10711021/RA5/blob/main/RA5_1/test_calculadora.py)
+[TestCalculadora](https://github.com/PPS10711021/RA5/blob/main/RA5_1/test_calculadora.py)
 ```python
 import unittest
 from calculadora import Calculadora
@@ -130,7 +130,7 @@ pipeline {
     }
 }
 ```
-[Prueba Calculadora y Test](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/calc.png)
+![Prueba Calculadora y Test](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/calc.png)
 
 📖 Referencia: [Tareas Jenkins](https://psegarrac.github.io/Ciberseguridad-PePS/tema5/cd/ci/2022/01/13/jenkins.html#tareas)
 
