@@ -14,8 +14,8 @@ pipeline {
 
         stage('Pruebas Unitarias') {
             steps {
-                // Ejecuta todos los tests dentro de la carpeta tests
-                sh 'python3 -m unittest discover -s tests -p "test_*.py"'
+                // Ejecutar directamente el test que está en la raíz
+                sh 'python3 -m unittest test_calculadora.py'
             }
         }
     }
