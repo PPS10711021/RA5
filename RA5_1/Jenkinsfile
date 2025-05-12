@@ -14,8 +14,7 @@ pipeline {
 
         stage('Pruebas Unitarias') {
             steps {
-                // Ejecutar directamente el test que está en la raíz
-                sh 'cd $WORKSPACE && python3 -m unittest test_calculadora.py'
+                sh 'cd $WORKSPACE && python3 test_calculadora.py'
             }
         }
     }
