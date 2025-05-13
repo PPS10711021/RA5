@@ -40,13 +40,17 @@ pipeline {
 
         stage('Docker Compose Up') {
             steps {
-                sh 'docker-compose up -d'
+                script {
+                    sh 'docker-compose up -d'
+                }
             }
         }
 
         stage('Docker Compose Down') {
             steps {
-                sh 'docker-compose down'
+                script {
+                    sh 'docker-compose down'
+                }
             }
         }
     }
@@ -56,7 +60,7 @@ pipeline {
             echo 'Pipeline Docker ejecutada correctamente.'
         }
         failure {
-            echo ' Falló la pipeline Docker.'
-        
+            echo 'Falló la pipeline Docker.'
+        }
     }
 }
