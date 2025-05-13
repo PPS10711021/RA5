@@ -1,56 +1,40 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.11'
-        }
-    }
+    agent any
 
     stages {
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh 'docker build -t calculadora-image .'
-                }
+                sh 'docker build -t calculadora-image .'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                script {
-                    sh 'docker run --name calculadora-container -d calculadora-image'
-                }
+                sh 'docker run --name calculadora-container -d calculadora-image'
             }
         }
 
         stage('Run Tests in Docker') {
             steps {
-                script {
-                    sh 'docker exec calculadora-container python3 -m unittest test_calculadora.py'
-                }
+                sh 'docker exec calculadora-container python3 -m unittest test_calculadora.py'
             }
         }
 
         stage('Stop Docker Container') {
             steps {
-                script {
-                    sh 'docker stop calculadora-container && docker rm calculadora-container'
-                }
+                sh 'docker stop calculadora-container && docker rm calculadora-container'
             }
         }
 
         stage('Docker Compose Up') {
             steps {
-                script {
-                    sh 'docker-compose up -d'
-                }
+                sh 'docker-compose up -d'
             }
         }
 
         stage('Docker Compose Down') {
             steps {
-                script {
-                    sh 'docker-compose down'
-                }
+                sh 'docker-compose down'
             }
         }
     }
