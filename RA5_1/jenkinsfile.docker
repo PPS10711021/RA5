@@ -13,6 +13,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 dir('RA5_1') {
+                    sh 'docker rm -f calculadora-container || true'
                     sh 'docker run --name calculadora-container -d calculadora-image'
                 }
             }
