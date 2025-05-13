@@ -1,0 +1,62 @@
+pipeline {
+    agent {
+        docker {
+            image 'python:3.11'
+        }
+    }
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t calculadora-image .'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    sh 'docker run --name calculadora-container -d calculadora-image'
+                }
+            }
+        }
+
+        stage('Run Tests in Docker') {
+            steps {
+                script {
+                    sh 'docker exec calculadora-container python3 -m unittest test_calculadora.py'
+                }
+            }
+        }
+
+        stage('Stop Docker Container') {
+            steps {
+                script {
+                    sh 'docker stop calculadora-container && docker rm calculadora-container'
+                }
+            }
+        }
+
+        stage('Docker Compose Up') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
+
+        stage('Docker Compose Down') {
+            steps {
+                sh 'docker-compose down'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline Docker ejecutada correctamente.'
+        }
+        failure {
+            echo ' Falló la pipeline Docker.'
+        
+    }
+}
