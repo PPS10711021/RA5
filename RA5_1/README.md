@@ -100,6 +100,7 @@ python3 calculadora.py 2 4
 python3 -m unittest test_calculadora.py
 ```
 📸 Captura:
+
 ![Prueba Calculadora y Test](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/calc.png)
 
 ### Tarea2
@@ -138,9 +139,23 @@ pipeline {
     }
 }
 ```
-### 🛠️ Pruebas y ejecución 
+Una vez hecho el Jenkinsfile y unido el jenkins con nuestro repositorio, cada vez que haya un commit en el repositorio, pasará por jenkins.
 
+📸 Captura:
 
+![Pipeline correcta](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/pipeline_correcta.png)
+
+Una vez funciona todo correctamente, tenemos que comprometer el código y observar lo que sucede, para ello en la calculadora voy a cambiar la multiplicación de "a*b" por "0/b".
+
+📸 Captura:
+
+![MalCodigo](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/calc_mal.png)
+
+📸 Captura:
+
+![ErrorPipeline](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/error_calc.png)
+
+Por último volvemos a cambiar el código de la calculadora como estaba.
 
 📖 Referencia: [Tareas Jenkins](https://psegarrac.github.io/Ciberseguridad-PePS/tema5/cd/ci/2022/01/13/jenkins.html#tareas)
 
@@ -152,6 +167,155 @@ pipeline {
 3️⃣ **Run Tests:** Ejecución de pruebas dentro del contenedor  
 4️⃣ **Deploy:** Simulación o ejecución real de despliegue  
 5️⃣ **Docker Compose:** Lanzamiento de servicios mediante `docker-compose`
+
+
+Para esta parte tenemos que crear los siguientes archivos, Dockerfile, docker-compose.yml y jenkinsfile.docker:
+
+[Dockerfile](https://github.com/PPS10711021/RA5/blob/main/RA5_1/Dockerfile)
+```
+FROM python:3.11
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install --upgrade pip
+
+CMD ["python3", "-m", "unittest", "test_calculadora.py"]
+CMD ["tail", "-f", "/dev/null"]
+```
+
+[docker-compose.yml](https://github.com/PPS10711021/RA5/blob/main/RA5_1/docker-compose.yml)
+```
+version: '3.8'
+
+services:
+  calculadora:
+    build: .
+    container_name: calculadora-compose
+    command: python3 -m unittest test_calculadora.py
+    volumes:
+      - .:/app
+    working_dir: /app
+```
+
+[jenkinsfile.docker](https://github.com/PPS10711021/RA5/blob/main/RA5_1/jenkinsfile.docker)
+```
+pipeline {
+    agent any
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                dir('RA5_1') {
+                    sh 'docker build -t calculadora-image .'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                dir('RA5_1') {
+                    sh 'docker rm -f calculadora-container || true'
+                    sh 'docker run --name calculadora-container -d calculadora-image'
+                }
+            }
+        }
+
+        stage('Run Tests in Docker') {
+            steps {
+                dir('RA5_1') {
+                    sh 'docker exec calculadora-container python3 -m unittest test_calculadora.py'
+                }
+            }
+        }
+
+        stage('Stop Docker Container') {
+            steps {
+                dir('RA5_1') {
+                    sh 'docker stop calculadora-container && docker rm calculadora-container'
+                }
+            }
+        }
+
+        stage('Docker Compose Up') {
+            steps {
+                dir('RA5_1') {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+
+        stage('Docker Compose Down') {
+            steps {
+                dir('RA5_1') {
+                    sh 'docker-compose down'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline Docker ejecutada correctamente.'
+        }
+        failure {
+            echo 'Falló la pipeline Docker.'
+        }
+    }
+}
+```
+Una vez tenemos estos archivos, conseguimos que:
+-Al hacer un push en GitHub, el webhook lo notifica a Jenkins.
+-Jenkins toma el archivo jenkinsfile.docker.
+-Ejecuta:
+    -Build de imagen Docker
+    -Contenedor Docker
+    -Tests dentro del contenedor
+    -Apaga el contenedor
+    -Prueba docker-compose up/down
+
+### Ahora configuraremos el webhook con ngrok
+Cuando hacemos un push en GitHub, el webhook necesita una URL pública a la que enviar la notificación.
+Pero como Jenkins está corriendo localmente en nuestra máquina (localhost:8080), GitHub no puede alcanzarlo directamente.
+Ngrok crea un túnel seguro que expone tu Jenkins en una URL pública.
+
+📸 Captura:
+
+![ultima1.png](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/ultima1.png)
+
+Aquí ponemos en marcha ngrok, y ahora pondremos la url pública en el webhook de github.
+
+📸 Captura:
+
+![ultima3.png](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/ultima3.png)
+
+Aquí verificamos que ngrok está activo y que GitHub ha enviado correctamente una solicitud POST al webhook. El código de estado 200 OK indica que Jenkins recibió y procesó la solicitud sin errores.
+
+📸 Captura:
+
+![ultima5.png](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/ultima5.png)
+
+Por último esta imagen muestra que la ejecución de la pipeline Jenkins ha sido exitosa, iniciada por un push de GitHub (trigger automático). Esto confirma que el webhook está funcionando correctamente y Jenkins ha obtenido el jenkinsfile.docker desde GitHub.
+
+📸 Captura:
+
+![ultima6.png](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/ultima6.png)
+
+---
+
+## ✅ Conclusión
+
+Esta práctica ha permitido implementar de forma completa un entorno de **CI/CD automatizado y seguro** utilizando **Jenkins** y **Docker**, aplicando los conceptos fundamentales del desarrollo seguro y continuo. Se ha diseñado una solución funcional que:
+
+- 🔹 Automatiza el testeo y despliegue de una aplicación Python  
+- 🔹 Utiliza `Jenkinsfile` para definir pipelines reproducibles  
+- 🔹 Integra Docker para asegurar entornos controlados  
+- 🔹 Ejecuta pruebas unitarias dentro de contenedores  
+- 🔹 Orquesta contenedores con `docker-compose`  
+- 🔹 Automatiza la ejecución mediante Webhooks y `ngrok`  
+
+Además, se ha trabajado con herramientas reales del entorno profesional, resolviendo problemas habituales como la exposición segura del entorno local o los permisos del demonio Docker dentro de Jenkins. El resultado final demuestra que es posible automatizar todo el flujo desde un commit en GitHub hasta el testeo y despliegue en contenedores, reforzando la trazabilidad, la seguridad y la eficiencia del desarrollo software.
 
 ---
 
