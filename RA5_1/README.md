@@ -47,6 +47,7 @@ Esta práctica permite alcanzar los siguientes criterios de evaluación:
 
 ### 🔧 3.1. Realizar las tareas 1 y 2 del apartado de Jenkins  
 
+### Tarea1
 [Calculadora](https://github.com/PPS10711021/RA5/blob/main/RA5_1/calculadora.py)
 ```python
 import sys
@@ -92,7 +93,16 @@ class TestCalculadora(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 ```
- 
+
+Ejecutamos la calculadora y las pruebas unitarias con python3 desde un linux mint:
+```
+python3 calculadora.py 2 4
+python3 -m unittest test_calculadora.py
+```
+📸 Captura:
+![Prueba Calculadora y Test](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/calc.png)
+
+### Tarea2
 📄 Crear un pipeline utilizando un `Jenkinsfile` que compile y despliegue una aplicación de prueba.
 
 [Jenkinsfile](https://github.com/PPS10711021/RA5/blob/main/RA5_1/Jenkinsfile)
@@ -130,15 +140,7 @@ pipeline {
 ```
 ### 🛠️ Pruebas y ejecución 
 
-Ejecutamos la calculadora y las pruebas unitarias con python3 desde un linux mint:
-```
-python3 calculadora.py 2 4
-python3 -m unittest test_calculadora.py
-```
 
-📸 Captura:
-
-![Prueba Calculadora y Test](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/calc.png)
 
 📖 Referencia: [Tareas Jenkins](https://psegarrac.github.io/Ciberseguridad-PePS/tema5/cd/ci/2022/01/13/jenkins.html#tareas)
 
