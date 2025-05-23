@@ -1,0 +1,18 @@
+---
+- name: Actualizar sistema e instalar Apache
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Actualizar lista de paquetes
+      apt:
+        update_cache: yes
+
+    - name: Actualizar todos los paquetes
+      apt:
+        upgrade: dist
+
+    - name: Instalar Apache2
+      apt:
+        name: apache2
+        state: present
