@@ -82,7 +82,7 @@ end
 ```
 📸 Captura:
 
-![VagrantUp](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/vagrant1.png)
+![VagrantUp](https://github.com/PPS10711021/RA5/blob/main/RA5_2/assets/vagrant1.png)
 
 La máquina se inició sin errores y quedó preparada para la fase de automatización con Ansible. La red privada configurada funcionó correctamente, y se confirmó el acceso por SSH mediante clave privada.
 
@@ -90,7 +90,7 @@ En la siguiente imagen observamos la máquina creada en VirtualBox.
 
 📸 Captura:
 
-![Creada](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/creada.png)
+![Creada](https://github.com/PPS10711021/RA5/blob/main/RA5_2/assets/creada.png)
 
 ### 🔧 3.2. Configuración inicial con Ansible
 
@@ -126,7 +126,7 @@ Creamos el archivo inventory.ini y el playbook_update_apache.yml:
 ```
 📸 Accedemos por ssh a la máquina:
 
-![ssh](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/vagrantssh.png)
+![ssh](https://github.com/PPS10711021/RA5/blob/main/RA5_2/assets/vagrantssh.png)
 
 ```python
 vagrant ssh
@@ -134,7 +134,7 @@ vagrant ssh
 
 📸 Instalamos ansible:
 
-![InstalarAnsible](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/ansible.png)
+![InstalarAnsible](https://github.com/PPS10711021/RA5/blob/main/RA5_2/assets/ansible.png)
 
 ```python
 sudo apt install -y ansible
@@ -142,7 +142,7 @@ sudo apt install -y ansible
 
 📸 Captura de ejecución correcta del playbook:
 
-![PlaybookApache](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/ansible2.png)
+![PlaybookApache](https://github.com/PPS10711021/RA5/blob/main/RA5_2/assets/ansible2.png)
 
 ```python
 ansible-playbook -i inventory.ini playbook_update_apache.yml
@@ -185,7 +185,7 @@ Creamos el archivo playbook_index_html.yml:
 
 📸 Captura del resultado de la ejecución del playbook.
 
-![PlaybookApache](https://github.com/PPS10711021/RA5/blob/main/RA5_1/assets/ansible3.png)
+![PlaybookApache](https://github.com/PPS10711021/RA5/blob/main/RA5_2/assets/ansible3.png)
 
 ```python
 ansible-playbook -i inventory.ini playbook_index_html.yml
