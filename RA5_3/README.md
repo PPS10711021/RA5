@@ -92,6 +92,7 @@ wget https://github.com/prometheus/node_exporter/releases/download/v1.9.1/node_e
 ```
 
 Copiamos el binario
+
 ```bash
 tar -xvzf node_exporter-1.9.1.linux-amd64.tar.gz
 cd node_exporter-1.9.1.linux-amd64
@@ -99,6 +100,7 @@ sudo cp node_exporter /usr/local/bin/
 ```
 
 Creamos el servicio systemd
+
 ```bash
 # /etc/systemd/system/node_exporter.service
 [Unit]
@@ -112,6 +114,41 @@ ExecStart=/usr/local/bin/node_exporter
 [Install]
 WantedBy=default.target
 ```
+
+Docker compose build y up
+
+```bash
+docker-compose build
+docker-compose up -d
+```
+Capturas:
+![Build](https://github.com/PPS10711021/RA5/blob/main/RA5_3/assets/pro1.png)
+![Up](https://github.com/PPS10711021/RA5/blob/main/RA5_3/assets/docker-composeup.png)
+
+cAdvisor funciona en http://localhost:8080 y nos da información del sistema.
+
+Capturas:
+![cadvisor](https://github.com/PPS10711021/RA5/blob/main/RA5_3/assets/cadvisor.png)
+
+Grafana funcionando en http://localhost:3000 y mostrando métricas.
+
+Capturas:
+![grafana](https://github.com/PPS10711021/RA5/blob/main/RA5_3/assets/grafana.png)
+![grafana2](https://github.com/PPS10711021/RA5/blob/main/RA5_3/assets/grafana2.png)
+
+Prometheus funcionando y mostrando información.
+
+Capturas:
+![pro2](https://github.com/PPS10711021/RA5/blob/main/RA5_3/assets/pro2.png)
+![targets](https://github.com/PPS10711021/RA5/blob/main/RA5_3/assets/targets.png)
+
+Servicio de node_exporter corriendo en el servidor remoto.
+
+```bash
+sudo systemctl status node_exporter
+```
+Capturas:
+![servicio_node](https://github.com/PPS10711021/RA5/blob/main/RA5_3/assets/servicio_node.png)
 
 ---
 
