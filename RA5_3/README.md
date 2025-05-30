@@ -78,6 +78,43 @@ sudo cp node_exporter-1.8.0.linux-amd64/node_exporter /usr/local/bin/
 
 ---
 
+Clonamos el repositorio
+
+```bash
+git clone https://github.com/dinesh24murali/example_repo.git
+cd example_repo/prometheus_grafana_example
+```
+
+Instalar node exporter
+
+```bash
+wget https://github.com/prometheus/node_exporter/releases/download/v1.9.1/node_exporter-1.9.1.linux-amd64.tar.gz
+```
+
+Copiamos el binario
+```bash
+tar -xvzf node_exporter-1.9.1.linux-amd64.tar.gz
+cd node_exporter-1.9.1.linux-amd64
+sudo cp node_exporter /usr/local/bin/
+```
+
+Creamos el servicio systemd
+```bash
+# /etc/systemd/system/node_exporter.service
+[Unit]
+Description=Node Exporter
+After=network.target
+
+[Service]
+User=root
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=default.target
+```
+
+---
+
 ## ✅ Conclusión
 
 Esta práctica ha permitido:
