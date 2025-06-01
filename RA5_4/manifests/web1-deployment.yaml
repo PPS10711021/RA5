@@ -1,19 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web1
   name: web1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: web1
+      io.kompose.service: web1
+  strategy: {}
   template:
     metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
       labels:
-        app: web1
+        io.kompose.network/kubernetes-default: "true"
+        io.kompose.service: web1
     spec:
       containers:
-      - name: web1
-        image: httpd:alpine
-        ports:
-        - containerPort: 80
+        - image: nginx
+          name: web1
+          resources: {}
+      restartPolicy: Always
+status: {}
