@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ha-nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ha-nginx
+  template:
+    metadata:
+      labels:
+        app: ha-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
