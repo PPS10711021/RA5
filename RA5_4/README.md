@@ -81,6 +81,70 @@ Interfaz basada en terminal que permite navegar y observar los recursos del clú
 - ✅ Instalar K9s y validar  
 - 📸 Capturas: clúster, pods, servicio nginx, uso de K9s
 
+Instalamos Kubernetes mediente un script oficial.
+
+```bash
+curl -sfL https://get.k3s.io | sh -
+```
+
+📸 Captura:
+![instalar](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/instalar.png)
+
+Definimos el deployment:
+
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:stable
+        ports:
+        - containerPort: 80
+```
+
+Despliegue del deployment de nginx:
+
+```bash
+sudo kubectl apply -f nginx_deployment.yml
+```
+
+📸 Captura:
+![nginx_deploy](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/nginx_deploy.png)
+
+Verificación de los pods:
+
+```bash
+sudo kubectl get pods
+sudo kubectl get deployments
+```
+
+📸 Captura:
+![verificar](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/verificar.png)
+
+Instalación y ejecución de Kubernetes.
+
+```bash
+curl -sS https://webinstall.dev/k9s | bash
+source ~/.config/envman/PATH.env
+k9s
+```
+
+📸 Captura:
+![k9s](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s.png)
+![k9s2](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s2.png)
+
 ---
 
 ### 🔧 5.2 – Despliegue en modo HA
@@ -89,6 +153,56 @@ Interfaz basada en terminal que permite navegar y observar los recursos del clú
 - ✅ Base de datos embebida (etcd) o externa  
 - ✅ Validación con kubectl y K9s  
 - 📸 Capturas: arquitectura HA, validación
+
+Instalación inicial en modo HA.
+
+```bash
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --cluster-init" sh -
+```
+
+📸 Captura:
+![k9s3](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s3.png)
+
+Obtenemos el token del nodo lider.
+
+```bash
+sudo cat /var/lib/rancher/k3s/server/node-token
+```
+
+📸 Captura:
+![k9s4](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s4.png)
+
+Despliegue del servicio nginx (modo HA).
+
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ha-nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ha-nginx
+  template:
+    metadata:
+      labels:
+        app: ha-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+```
+
+```bash
+sudo kubectl apply -f ha_nginx_deployment.yml
+sudo kubectl get pods
+```
+
+📸 Captura:
+![k9s5](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s5.png)
 
 ---
 
