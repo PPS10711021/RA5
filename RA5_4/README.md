@@ -88,6 +88,7 @@ curl -sfL https://get.k3s.io | sh -
 ```
 
 📸 Captura:
+
 ![instalar](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/instalar.png)
 
 Definimos el deployment:
@@ -121,6 +122,7 @@ sudo kubectl apply -f nginx_deployment.yml
 ```
 
 📸 Captura:
+
 ![nginx_deploy](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/nginx_deploy.png)
 
 Verificación de los pods:
@@ -131,6 +133,7 @@ sudo kubectl get deployments
 ```
 
 📸 Captura:
+
 ![verificar](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/verificar.png)
 
 Instalación y ejecución de Kubernetes.
@@ -142,6 +145,7 @@ k9s
 ```
 
 📸 Captura:
+
 ![k9s](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s.png)
 ![k9s2](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s2.png)
 
@@ -161,6 +165,7 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --cluster-init" sh -
 ```
 
 📸 Captura:
+
 ![k9s3](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s3.png)
 
 Obtenemos el token del nodo lider.
@@ -170,6 +175,7 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 ```
 
 📸 Captura:
+
 ![k9s4](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s4.png)
 
 Despliegue del servicio nginx (modo HA).
@@ -202,6 +208,7 @@ sudo kubectl get pods
 ```
 
 📸 Captura:
+
 ![k9s5](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/k9s5.png)
 
 ---
@@ -214,6 +221,49 @@ URL:
 - ✅ Deploy desde Compose adaptado a Kubernetes  
 - ✅ Validación con K9s  
 - 📸 Capturas: servicio Flask + Redis + Traefik desplegado, estado en K9s
+
+Archivo docker-compose.
+
+```bash
+version: "3"
+services:
+  web1:
+    image: nginx
+  web2:
+    image: nginx
+  balanceador:
+    image: nginx
+    ports:
+      - "8080:80"
+```
+
+📸 Captura:
+
+![compose](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/compose.png)
+
+Conversión a manifiestos Kubernetes con Kompose.
+
+```bash
+kompose convert
+```
+
+📸 Captura:
+
+![kompose](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/kompose.png)
+
+Exposición del balanceador nginx.
+
+```bash
+sudo kubectl apply -f balanceador-service.yaml
+sudo kubectl get pods
+sudo kubectl get svc
+sudo curl http://192.168.1.129:30000
+```
+
+📸 Captura:
+
+![balancer](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/balancer.png)
+![curl](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/cuel.png)
 
 ---
 
