@@ -255,6 +255,15 @@ Exposición del balanceador nginx.
 
 ```bash
 sudo kubectl apply -f balanceador-service.yaml
+```
+
+📸 Captura:
+
+![balancer](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/balancer.png)
+
+Verificación del balanceador.
+
+```bash
 sudo kubectl get pods
 sudo kubectl get svc
 sudo curl http://192.168.1.129:30000
@@ -262,7 +271,6 @@ sudo curl http://192.168.1.129:30000
 
 📸 Captura:
 
-![balancer](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/balancer.png)
 ![curl](https://github.com/PPS10711021/RA5/blob/main/RA5_4/assets/cuel.png)
 
 ---
